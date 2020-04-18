@@ -74,7 +74,8 @@ proc openCache*(cachePath: string): FileSystem =
             of ParseCode.ReadName:
                 var length = dataFileStream.readInt16()
                 bigEndian16(addr length, addr length)
-                sprite.name = dataFileStream.readStr(length)
+                let name = dataFileStream.readStr(length)
+                sprite.name = if name == "None": "" else: name
             of ParseCode.ReadOffsetX:
                 sprite.offsetX = dataFileStream.readInt16()
                 bigEndian32(addr sprite.offsetX, addr sprite.offsetX)
@@ -174,7 +175,7 @@ proc createWorkingDirectory(fs: FileSystem) =
     fs.dumpImages()
 
 
-let fs = openCache(r"C:\Users\Ronnie\Desktop\galkon_sprite")
+let fs = openCache(getCurrentDir() / "cache_test")
 fs.createWorkingDirectory()
-fs.createCache("./")
+#fs.createCache("./")
 
