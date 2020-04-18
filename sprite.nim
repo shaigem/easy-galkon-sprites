@@ -51,6 +51,7 @@ proc encode*(sprite: Sprite): Stream =
         result.write(ParseCode.ReadData)
         for i in data:
             result.write(i)
+
     result.write(ParseCode.Terminate)
     result.setPosition(0)
 
