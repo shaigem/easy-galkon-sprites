@@ -15,6 +15,15 @@ const
     MetadataFileName = "metadata.yaml"
     SpritesDirName = "sprites"
 
+proc appendNewSpriteFromFile*(fs: FileSystem, filename: string): Sprite =
+    let file = try: readFile(filename)
+        except: quit("Problem creating sprite from file: " & filename & "! " & getCurrentExceptionMsg()) 
+    result = Sprite()
+    let newId = fs.sprites.high() + 1
+    result.id = int16(newId)
+    result.data = cast[seq[int8]](file)
+    fs.sprites.add(result)
+
 proc dumpImages*(fs: FileSystem, outputDirectory: string) =
     discard existsOrCreateDir(outputDirectory)
     for sprite in fs.sprites:
