@@ -34,11 +34,20 @@ proc openWorkingDirectory*(workingDirectoryPath: string): FileSystem =
 
     let spritesLength = result.sprites.len()
     for id in 0 ..< spritesLength:
+        var sprite = result.sprites[id]
+        if sprite.id != id:
+            echo "ERROR: Trying to read sprite " & $id & " but read " & $sprite.id & " instead."
+            echo "Did you delete an image out of order?"
+            echo "Remember that you can only delete sprites with the highest id."
+            echo "Check " & MetadataFileName & " for issues."
+            quit()
         let imgPath = imgDir / $id & SpriteExtension
-        if not fileExists(imgPath): # TODO defragmentation
-            quit("TODO useful error message on missing id: " & $id)
+        if not fileExists(imgPath):
+            echo("ERROR: Sprite image file " & $id & " is missing!")
+            echo("Did you forget to delete it from " & MetadataFileName & "?")
+            quit()
         let file = readFile(imgPath)
-        result.sprites[id].data = cast[seq[int8]](file)
+        sprite.data = cast[seq[int8]](file)
 
 proc createWorkingDirectory*(fs: FileSystem, workingDirectoryPath: string) =
     discard existsOrCreateDir(workingDirectoryPath)
