@@ -56,7 +56,7 @@ proc createWorkingDirectory*(fs: FileSystem, workingDirectoryPath: string) =
     fs.dumpImages(workingDirectoryPath / SpritesDirName)
 
 proc openCache*(cachePath: string) :  FileSystem =
-    var fs = FileSystem()
+    result = FileSystem()
     let
         indexFileName = cachePath / IndexFileName
         dataFileName = cachePath / DataFileName
@@ -72,8 +72,7 @@ proc openCache*(cachePath: string) :  FileSystem =
     for i in 0 ..< numSprites:
         discard indexFileStream.readInt32()
         var sprite = newSpriteFromStreams(indexFileStream, dataFileStream)
-        fs.sprites.add(sprite)
-    return fs
+        result.sprites.add(sprite)
 
 proc createCache*(fs: FileSystem, outputDirPath: string) =
     discard existsOrCreateDir(outputDirPath)
