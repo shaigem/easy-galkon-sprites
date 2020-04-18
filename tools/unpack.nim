@@ -1,7 +1,7 @@
 const doc = """
-Welcome to Galkon's Sprite Unpacker (GSU).
-TODO explain wat this does
-
+Welcome to Easy Galkon Sprites Unpacker.
+This tool unpacks images and their metadata from the cache (sprites.dat and sprites.idx) into a workspace folder.
+This allows the user to edit sprites using tools already provided by the OS (eg. Windows Explorer and Notepad on Windows)
 """
 import ../src/cache, os
 

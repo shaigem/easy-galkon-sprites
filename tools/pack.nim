@@ -1,7 +1,7 @@
 const doc = """
-Welcome to Galkon's Sprite Packer (GSP).
-TODO explain wat this does
-
+Welcome to Easy Galkon Sprites Packer.
+This tool creates a new cache (sprites.dat and sprites.idx) from the "working" folder
+and outputs the new cache into a folder called "output-cache".
 """
 import ../src/cache, os
 
