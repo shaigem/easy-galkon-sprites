@@ -1,7 +1,8 @@
 import yaml
 import streams
-import endians
 import strutils
+import binaryprimatives
+
 const EmptyName = "None"
 
 type Sprite* = object
@@ -23,43 +24,33 @@ type ParseCode {.pure.} = enum
 
 proc encode*(sprite: Sprite): Stream =
     result = newStringStream()
-    var id = int16(sprite.id)
+    let id = int16(sprite.id)
     if id != -1:
         result.write(ParseCode.ReadId)
-
-        bigEndian16(addr id, addr id)
-        result.write(id)
+        result.writeInt16BigEndian(id)
 
     let name = sprite.name
     if not name.isEmptyOrWhitespace:
         result.write(ParseCode.ReadName)
-
-        var length = int16(name.len())
-        bigEndian16(addr length, addr length)
-        result.write(length)
-
+        let length = int16(name.len())
+        result.writeInt16BigEndian(length)
         result.write(name)
 
-    var offsetX = int16(sprite.offsetX)
+    let offsetX = int16(sprite.offsetX)
     if offsetX != 0:
         result.write(ParseCode.ReadOffsetX)
+        result.writeInt16BigEndian(offsetX)
 
-        bigEndian16(addr offsetX, addr offsetX)
-        result.write(offsetX)
-
-    var offsetY = int16(sprite.offsetY)
+    let offsetY = int16(sprite.offsetY)
     if offsetY != 0:
         result.write(ParseCode.ReadOffsetY)
-
-        bigEndian16(addr offsetY, addr offsetY)
-        result.write(offsetY)
+        result.writeInt16BigEndian(offsetY)
 
     let data = sprite.data
     if data.len != 0:
         result.write(ParseCode.ReadData)
         for i in data:
             result.write(i)
-
     result.write(ParseCode.Terminate)
     result.setPosition(0)
 
@@ -71,22 +62,17 @@ proc newSpriteFromStreams*(indexFileStream: Stream,
             of ParseCode.Terminate:
                 break
             of ParseCode.ReadId:
-                result.id = dataFileStream.readInt16()
-                bigEndian16(addr result.id, addr result.id)
+                result.id = dataFileStream.readInt16BigEndian()
             of ParseCode.ReadName:
-                var length = dataFileStream.readInt16()
-                bigEndian16(addr length, addr length)
+                let length = dataFileStream.readInt16BigEndian()
                 let name = dataFileStream.readStr(length)
                 result.name = if name == EmptyName: "" else: name
             of ParseCode.ReadOffsetX:
-                result.offsetX = dataFileStream.readInt16()
-                bigEndian32(addr result.offsetX, addr result.offsetX)
+                result.offsetX = dataFileStream.readInt16BigEndian()
             of ParseCode.ReadOffsetY:
-                result.offsetY = dataFileStream.readInt16()
-                bigEndian32(addr result.offsetY, addr result.offsetY)
+                result.offsetY = dataFileStream.readInt16BigEndian()
             of ParseCode.ReadData:
-                var dataLength = indexFileStream.readInt32()
-                bigEndian32(addr dataLength, addr dataLength)
+                let dataLength = indexFileStream.readInt32BigEndian()
                 var data = newSeq[int8](dataLength)
                 for i in 0 ..< dataLength:
                     data[i] = dataFileStream.readInt8()
