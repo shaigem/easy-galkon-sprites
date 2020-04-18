@@ -1,6 +1,6 @@
 # Easy Galkon Sprites (EGS)
 
-Easy Galkon Sprites (EGS) is an easy-to-use tool for decoding and encoding cache files (sprites.dat and sprites.idx) that uses Galkon's sprite cache format.
+Easy Galkon Sprites (EGS) contains a collection of tools that assists in decoding and encoding cache files (sprites.dat and sprites.idx) that uses Galkon's sprite cache format.
 
 ## Tools
 
