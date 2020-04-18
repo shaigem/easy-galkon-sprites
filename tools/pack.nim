@@ -23,4 +23,4 @@ echo "Creating new sprites.idx and sprites.dat..."
 fs.createCache(outputDirPath)
 
 echo "Complete! Created new cache in " &
-    workingDirPath
+    outputDirPath
