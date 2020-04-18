@@ -1,6 +1,6 @@
 import os
 import streams
-import untar/gzip
+import zip/gzipfiles
 import endians
 import yaml
 import strutils
@@ -52,8 +52,8 @@ proc openCache*(cachePath: string): FileSystem =
     let
         indexFileName = cachePath / IndexFileName
         dataFileName = cachePath / DataFileName
-        indexFileStream = newGzStream(indexFileName)
-        dataFileStream = newGzStream(dataFileName)
+        indexFileStream = newGzFileStream(indexFileName, fmRead)
+        dataFileStream = newGzFileStream(dataFileName, fmRead)
     defer: indexFileStream.close()
     defer: dataFileStream.close()
 
@@ -93,11 +93,12 @@ proc openCache*(cachePath: string): FileSystem =
     return fs
 
 proc createCache*(fs: FileSystem, outputDirPath: string) =
+    discard existsOrCreateDir(outputDirPath) # TODO handle error
     let
         indexFileName = outputDirPath / IndexFileName
         dataFileName = outputDirPath / DataFileName
-        indexFileStream = newFileStream(indexFileName, fmReadWrite)
-        dataFileStream = newFileStream(dataFileName, fmReadWrite)
+        indexFileStream = newGzFileStream(indexFileName, fmWrite)
+        dataFileStream = newGzFileStream(dataFileName, fmWrite)
     defer: indexFileStream.close()
     defer: dataFileStream.close()
     var spritesLength = int32(fs.sprites.len())
@@ -175,7 +176,5 @@ proc createWorkingDirectory(fs: FileSystem) =
     fs.dumpImages()
 
 
-let fs = openCache(getCurrentDir() / "cache_test")
+let fs = openCache(getCurrentDir() / "cache")
 fs.createWorkingDirectory()
-#fs.createCache("./")
-
