@@ -2,6 +2,30 @@
 
 Easy Galkon Sprites (EGS) contains a collection of tools that assists in decoding and encoding cache files (sprites.dat and sprites.idx) that uses Galkon's sprite cache format.
 
+## Galkon's Sprite Cache Format
+
+Here is an outline of the encoding for each file.
+
+Note that the order of bytes used is big-endian.
+
+### sprites.dat
+
+```nim
+type Sprite = object
+    id: int16
+    name: string
+    offsetX: int16
+    offsetY: int16
+```
+
+### sprites.idx
+```nim
+    let numberOfSprites: int32
+    for sprite in sprites:
+        let id = int32(sprite.id)
+        let spriteDataLen = int32(sprite.data.len())
+```
+
 ## Tools
 
 ### unpack
