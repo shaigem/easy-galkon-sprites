@@ -49,6 +49,12 @@ After you are done editing your sprites, use the "pack" tool to pack your change
 
 ## Usage (Windows)
 
+Download the latest .zip release from the [releases](https://github.com/abyssalen/easy-galkon-sprites/releases) page.
+
+The downloaded release's folder structure should look like this:
+
+![](https://i.imgur.com/gdMGk3P.png)
+
 #### Setting up
 
 1. Place your sprites.dat and sprites.idx into the "input" folder
