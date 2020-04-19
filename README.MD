@@ -20,10 +20,10 @@ type Sprite = object
 
 ### sprites.idx
 ```nim
-    let numberOfSprites: int32
-    for sprite in sprites:
-        let id = int32(sprite.id)
-        let spriteDataLen = int32(sprite.data.len())
+let numberOfSprites: int32
+for sprite in sprites:
+    let id = int32(sprite.id)
+    let spriteDataLen = int32(sprite.data.len())
 ```
 
 ## Tools
