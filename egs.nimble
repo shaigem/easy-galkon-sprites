@@ -1,6 +1,6 @@
 # Package
 
-version = "0.1.0"
+version = "0.2.0"
 author = "Ronnie Tran"
 description = "Collection of tools that assists in " &
 "managing files that uses Galkon's sprite cache format."
