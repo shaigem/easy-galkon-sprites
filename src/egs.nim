@@ -1,2 +1,2 @@
-import cache, binaryprimatives, sprite
-export cache, binaryprimatives, sprite
+import cache, binaryprimatives, sprite, workspace
+export cache, binaryprimatives, sprite, workspace
