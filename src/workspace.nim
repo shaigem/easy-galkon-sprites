@@ -1,4 +1,4 @@
-import cache, yaml, os, streams
+import cache, yaml, os, streams, sprite
 
 const 
     MetadataFileName = "metadata.yaml"
