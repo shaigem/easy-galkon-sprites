@@ -4,7 +4,8 @@ This tool imports images from the "bulk-import" folder in the working folder
 Images imported are appended to the end of the filesystem.
 This is useful when you want to add multiple images.
 """
-import ../src/[workspace, cache], os, sequtils
+import ../src/[workspace, cache], os, sequtils, rdstdin, strutils
+
 
 const
     WorkingDirName = "working"
@@ -36,5 +37,11 @@ for imgFilePath in walkFiles(pattern):
 
 echo "Creating a new working directory with the new sprites..."
 fs.createWorkingDirectory(workingDirPath)
+
+let answer = readLineFromStdin("Do you want to delete the images in the bulk import folder? (Y/N): ")
+if "Y" in answer:
+    for imgFilePath in walkFiles(pattern):
+        try: removeFile(imgFilePath)
+        except OSError: quit("Failed to remove " & imgFilePath & "! " & getCurrentExceptionMsg())
 
 echo "Complete!"
