@@ -4,7 +4,7 @@ This tool imports images from the "bulk-import" folder in the working folder
 Images imported are appended to the end of the filesystem.
 This is useful when you want to add multiple images.
 """
-import ../src/[cache, sprite], os, sequtils
+import ../src/[workspace, cache], os, sequtils
 
 const
     WorkingDirName = "working"
